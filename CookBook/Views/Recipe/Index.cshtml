@@ -1,13 +1,24 @@
 ﻿@model IEnumerable<CookBook.Models.RecipeModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "recipes";
 }
 
-<h1>Recipes</h1>
+<style>
+    body {
+        background-image: url('bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-3">Recipes</h1>
+</div>
 
 <p>
-    <a asp-action="Create">Add recipe</a>
+    <a class="btn btn-success btn-lg" asp-action="Create">Add recipe</a>
 </p>
 <table class="table">
     <thead>
@@ -27,13 +38,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.name)
             </td>
-            <td>
+                <td >
                 @Html.DisplayFor(modelItem => item.time)
             </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id=item.recipeId }) |
-                @Html.ActionLink("Edit", "Edit", new { id=item.recipeId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.recipeId })
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id=item.recipeId }, new { @class = "btn btn-primary"})
+                    @Html.ActionLink("Edit", "Edit", new { id=item.recipeId }, new { @class = "btn btn-warning"})
+                @Html.ActionLink("Delete", "Delete", new { id=item.recipeId }, new { @class = "btn btn-danger"})
             </td>
         </tr>
 }

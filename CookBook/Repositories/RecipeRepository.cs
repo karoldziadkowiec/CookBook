@@ -15,7 +15,7 @@ namespace CookBook.Repositories
 
         public IQueryable<RecipeModel> GetAllActive()
         {
-            return _context.Recipes;
+            return _context.Recipes.OrderBy(x => x.name);
         }
 
         public void add(RecipeModel recipe)

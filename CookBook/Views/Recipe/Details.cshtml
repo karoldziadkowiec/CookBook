@@ -1,10 +1,10 @@
 ﻿@model CookBook.Models.RecipeModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "recipe details";
 }
 
-<h1>Recipe details</h1>
+<h1 class="display-4">Recipe details</h1>
 
 <div>
     <hr />
@@ -36,6 +36,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.recipeId }) |
-    <a asp-action="Index">Back to recipes</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.recipeId }, new { @class="btn btn-warning"}) | 
+    <a class="btn btn-dark" asp-action="Index">Back to recipes</a>
 </div>

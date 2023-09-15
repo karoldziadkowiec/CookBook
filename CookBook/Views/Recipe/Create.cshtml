@@ -1,10 +1,19 @@
 ﻿@model CookBook.Models.RecipeModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "create recipe";
 }
 
-<h1>Add recipe</h1>
+<style>
+    body {
+        background-image: url('/bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
+<h1 class="display-4">Create recipe</h1>
 
 <hr />
 <div class="row">
@@ -23,23 +32,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="ingredients" class="control-label"></label>
-                <input asp-for="ingredients" class="form-control" />
+                <textarea asp-for="ingredients" class="form-control"></textarea>
                 <span asp-validation-for="ingredients" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="preparation" class="control-label"></label>
-                <input asp-for="preparation" class="form-control" />
+                <textarea asp-for="preparation" class="form-control"></textarea>
                 <span asp-validation-for="preparation" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" /> | 
+                <a class="btn btn-dark" asp-action="Index">Back to recipes</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to recipes</a>
 </div>
 
 @section Scripts {
