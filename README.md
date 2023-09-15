@@ -4,7 +4,7 @@ The project is a modern web application that enables effective management of cul
 
 Technologies used in the project: C#, ASP.NET Core (MVC), Microsoft SQL Server, HTML, CSS, JavaScript.
 
-Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database.
+Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
 Start - Recipes page:
 ![Start - Recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/1.png)
