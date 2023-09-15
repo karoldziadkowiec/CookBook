@@ -12,8 +12,8 @@ Start - Recipes page:
 Create recipe page:
 ![Create recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/2.png)
 
-Recipes page after adding new recpie:
-![Recipes page after adding new recpie](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/3.png)
+Recipes page after adding new recipe:
+![Recipes page after adding new recipe](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/3.png)
 
 Recipe details page:
 ![Recipe details page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/4.png)
