@@ -6,22 +6,22 @@ Technologies used in the project: C#, ASP.NET Core (MVC), Entity Framework, Micr
 
 Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
-Start - Recipes page:
+Start page:
 ![Start - Recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/1.png)
 
-Create recipe page:
+Creating a new recipe:
 ![Create recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/2.png)
 
-Recipes page after adding new recipe:
+Recipes after adding new one:
 ![Recipes page after adding new recipe](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/3.png)
 
 Recipe details page:
 ![Recipe details page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/4.png)
 
-Edit recipe page:
+Editing recipe details:
 ![Edit recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/5.png)
 
-Delete recipe page:
+Deleting recipe:
 ![Delete recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/6.png)
 
 Application in mobile version: <br/>
