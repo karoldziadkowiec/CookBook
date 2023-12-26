@@ -1,11 +1,11 @@
 # CookBook
 
 The project is a modern web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. This project perfectly illustrates how using a database can improve everyday life. Thanks to its graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. Technologies used in the project: 
-- Backend: C# with ASP.NET Core (MVC) employing REST API for communication
-- ORM: Entity Framework
-- Database: Microsoft SQL Server
-- Frontend: HTML, CSS, JavaScript
-- Additional kit: Bootstrap
+- Backend: \tC# with ASP.NET Core (MVC) employing REST API for communication
+- ORM: \tEntity Framework
+- Database: \tMicrosoft SQL Server
+- Frontend: \tHTML, CSS, JavaScript
+- Additional kit: \tBootstrap
 
 Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
