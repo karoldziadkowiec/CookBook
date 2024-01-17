@@ -1,27 +1,31 @@
 # CookBook
 
-The project is a modern web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. This project perfectly illustrates how using a database can improve everyday life. Thanks to its graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection.
-
-Technologies used in the project: C#, ASP.NET Core (MVC), Entity Framework, Microsoft SQL Server, HTML, CSS, JavaScript, Bootstrap.
+The project is a modern web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. Thanks to graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. Technologies used in the project: 
+- Backend: C#, ASP.NET Core (MVC)
+  - LINQ Queries
+- ORM: Entity Framework
+- Database: Microsoft SQL Server
+- Frontend: HTML, CSS, JavaScript
+- Additional kit: Bootstrap
 
 Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
-Start - Recipes page:
+Start page:
 ![Start - Recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/1.png)
 
-Create recipe page:
+Creating a new recipe:
 ![Create recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/2.png)
 
-Recipes page after adding new recipe:
+Recipes after adding new one:
 ![Recipes page after adding new recipe](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/3.png)
 
 Recipe details page:
 ![Recipe details page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/4.png)
 
-Edit recipe page:
+Editing recipe details:
 ![Edit recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/5.png)
 
-Delete recipe page:
+Deleting recipe:
 ![Delete recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/6.png)
 
 Application in mobile version: <br/>
