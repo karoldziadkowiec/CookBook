@@ -4,7 +4,7 @@ The project is a modern web application that enables effective management of cul
 - Backend: C#, ASP.NET Core (MVC)
   - LINQ Queries
   - Repository pattern
-- ORM: Entity Framework
+- ORM: Entity Framework Core
 - Database: Microsoft SQL Server
 - Frontend: HTML, CSS, JavaScript
 - Additional kit: Bootstrap
