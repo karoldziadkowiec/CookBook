@@ -1,13 +1,15 @@
 # CookBook
 
-The project is a modern web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. Thanks to graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. Technologies used in the project: 
+The project is a web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. Thanks to graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. Technologies used in the project: 
 - Backend: C#, ASP.NET Core (MVC)
   - LINQ Queries
   - Repository pattern
 - ORM: Entity Framework Core
+  - Migrations
 - Database: Microsoft SQL Server
 - Frontend: HTML, CSS, JavaScript
 - Additional kit: Bootstrap
+- Unit tests: xUnit
 
 Features of the project: adding a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
@@ -29,8 +31,8 @@ Editing recipe details:
 Deleting recipe:
 ![Delete recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/6.png)
 
-Favourit recipes after following:
-![MV1](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.png)
+Favourite recipes after following:
+![Favourite recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.png)
 
 Application in mobile version: <br/>
 ![MV2](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/8.png)
@@ -47,4 +49,5 @@ Application in mobile version: <br/>
 
 ![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/14.png)
 
+Unit testing with xUnit:
 ![Tests](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/15.png)
