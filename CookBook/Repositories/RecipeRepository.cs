@@ -11,42 +11,47 @@ namespace CookBook.Repositories
         }
 
         public RecipeModel GetRecipe(int recipeId)
-            => _context.Recipes.SingleOrDefault(x => x.recipeId == recipeId);
+            => _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
 
-        public IQueryable<RecipeModel> GetAllActive()
+        public IQueryable<RecipeModel> GetAllRecipes()
         {
-            return _context.Recipes.OrderBy(x => x.name);
+            return _context.Recipes.OrderBy(x => x.Name);
         }
 
-        public void add(RecipeModel recipe)
+        public IQueryable<RecipeModel> GetFavourites()
+        {
+            return _context.Recipes.Where(x => x.IsFollowed == true).OrderBy(x => x.Name);
+        }
+
+        public void AddRecipe(RecipeModel recipe)
         {
             _context.Recipes.Add(recipe);
             _context.SaveChanges();
         }
 
-        public void update(int recipeId, RecipeModel recipe)
+        public void UpdateRecipe(int recipeId, RecipeModel recipe)
         {
-            var result = _context.Recipes.SingleOrDefault(x => x.recipeId == recipeId);
+            var result = _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
             if(result != null)
             {
-                result.name = recipe.name;
-                result.time = recipe.time;
-                result.ingredients = recipe.ingredients;
-                result.preparation = recipe.preparation;
+                result.Name = recipe.Name;
+                result.Time = recipe.Time;
+                result.Ingredients = recipe.Ingredients;
+                result.Preparation = recipe.Preparation;
+                result.IsFollowed = result.IsFollowed;
 
                 _context.SaveChanges();
             }
         }
 
-        public void delete(int recipeId)
+        public void RemoveRecipe(int recipeId)
         {
-            var result = _context.Recipes.SingleOrDefault(x => x.recipeId == recipeId);
+            var result = _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
             if (result != null)
             {
                 _context.Recipes.Remove(result);
                 _context.SaveChanges();
             }
         }
-
     }
 }

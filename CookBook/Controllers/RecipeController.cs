@@ -9,15 +9,22 @@ namespace CookBook.Controllers
     public class RecipeController : Controller
     {
         private readonly IRecipeRepository _recipeRepository;
-        // GET: Recipe
-        public ActionResult Index()
-        {
-            return View(_recipeRepository.GetAllActive());
-        }
 
         public RecipeController(IRecipeRepository recipeRepository)
         {
             _recipeRepository = recipeRepository;
+        }
+
+        // GET: Recipe
+        public ActionResult Index()
+        {
+            return View(_recipeRepository.GetAllRecipes());
+        }
+
+        // GET: Recipe/Favourites
+        public ActionResult Favourites()
+        {
+            return View(_recipeRepository.GetFavourites());
         }
 
         // GET: Recipe/Details/5
@@ -37,8 +44,7 @@ namespace CookBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RecipeModel recipeModel)
         {
-            _recipeRepository.add(recipeModel);
-
+            _recipeRepository.AddRecipe(recipeModel);
 
             return RedirectToAction(nameof(Index));
         }
@@ -54,7 +60,7 @@ namespace CookBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, RecipeModel recipeModel)
         {
-            _recipeRepository.update(id, recipeModel);
+            _recipeRepository.UpdateRecipe(id, recipeModel);
 
             return RedirectToAction(nameof(Index));
         }
@@ -70,10 +76,41 @@ namespace CookBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, RecipeModel recipeModel)
         {
-            _recipeRepository.delete(id);
+            _recipeRepository.RemoveRecipe(id);
 
             return RedirectToAction(nameof(Index));
         }
 
+        // POST: Recipe/Follow/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Follow(int id)
+        {
+            var recipeModel = _recipeRepository.GetRecipe(id);
+
+            if (recipeModel != null)
+            {
+                recipeModel.IsFollowed = true;
+                _recipeRepository.UpdateRecipe(id, recipeModel);
+            }
+
+            return RedirectToAction(nameof(Favourites));
+        }
+
+        // POST: Recipe/Unfollow/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Unfollow(int id)
+        {
+            var recipeModel = _recipeRepository.GetRecipe(id);
+
+            if (recipeModel != null)
+            {
+                recipeModel.IsFollowed = false;
+                _recipeRepository.UpdateRecipe(id, recipeModel);
+            }
+
+            return RedirectToAction(nameof(Favourites));
+        }
     }
 }

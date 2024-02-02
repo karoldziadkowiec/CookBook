@@ -11,6 +11,15 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
+
+    .button-container {
+        display: flex;
+        gap: 5px;
+    }
+
+    .button-container form {
+        margin: 0;
+    }
 </style>
 
 <div class="text-center">
@@ -24,29 +33,39 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.time)
+                @Html.DisplayNameFor(model => model.Time)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-                <td >
-                @Html.DisplayFor(modelItem => item.time)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                @Html.ActionLink("Details", "Details", new { id=item.recipeId }, new { @class = "btn btn-primary"})
-                @Html.ActionLink("Edit", "Edit", new { id=item.recipeId }, new { @class = "btn btn-warning"})
-                @Html.ActionLink("Delete", "Delete", new { id=item.recipeId }, new { @class = "btn btn-danger"})
-            </td>
-        </tr>
-}
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td class="button-container">
+                    @Html.ActionLink("Details", "Details", new { id = item.RecipeID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RecipeID }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RecipeID }, new { @class = "btn btn-danger" })
+
+                    @if (!item.IsFollowed)
+                    {
+                        using (Html.BeginForm("Follow", "Recipe", new { id = item.RecipeID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-success">Follow</button>
+                        }
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

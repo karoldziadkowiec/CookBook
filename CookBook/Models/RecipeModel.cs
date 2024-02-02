@@ -8,20 +8,21 @@ namespace CookBook.Models
     public class RecipeModel
     {
         [Key]
-        public int recipeId { get; set; }
+        public int RecipeID { get; set; }
         [DisplayName("Name")]
         [Required(ErrorMessage = "Name field is required!")]
         [MaxLength(50)]
-        public string name { get; set; }
+        public string Name { get; set; }
         [DisplayName("Overall time")]
         [MaxLength(20)]
-        public string time { get; set; }
+        public string Time { get; set; }
         [DisplayName("Ingredients")]
         [MaxLength(500)]
-        public string ingredients { get; set; }
+        public string Ingredients { get; set; }
         [DisplayName("Preparation")]
         [MaxLength(1000)]
-        public string preparation { get; set; }
-
+        public string Preparation { get; set; }
+        [DisplayName("Followed")]
+        public bool IsFollowed { get; set; }
     }
 }

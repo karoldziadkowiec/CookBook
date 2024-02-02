@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CookBook.Models
 {
@@ -9,6 +10,5 @@ namespace CookBook.Models
         }
 
         public DbSet<RecipeModel> Recipes { get; set; }
-
     }
 }

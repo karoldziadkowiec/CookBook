@@ -5,9 +5,10 @@ namespace CookBook.Repositories
     public interface IRecipeRepository
     {
         RecipeModel GetRecipe(int recipeId);
-        IQueryable<RecipeModel> GetAllActive();
-        void add(RecipeModel recipe);
-        void update(int recipeId, RecipeModel recipe);
-        void delete(int recipeId);
+        IQueryable<RecipeModel> GetAllRecipes();
+        IQueryable<RecipeModel> GetFavourites();
+        void AddRecipe(RecipeModel recipe);
+        void UpdateRecipe(int recipeId, RecipeModel recipe);
+        void RemoveRecipe(int recipeId);
     }
 }
