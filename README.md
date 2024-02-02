@@ -29,9 +29,10 @@ Editing recipe details:
 Deleting recipe:
 ![Delete recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/6.png)
 
-Application in mobile version: <br/>
+Favourit recipes after following:
 ![MV1](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.png)
 
+Application in mobile version: <br/>
 ![MV2](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/8.png)
 
 ![MV3](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/9.png)
@@ -39,3 +40,11 @@ Application in mobile version: <br/>
 ![MV4](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/10.png)
 
 ![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/11.png)
+
+![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/12.png)
+
+![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/13.png)
+
+![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/14.png)
+
+![Tests](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/15.png)
