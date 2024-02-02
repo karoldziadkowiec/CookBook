@@ -7,6 +7,7 @@ namespace CookBook.Models
     {
         public RecipeManagerContext(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<RecipeModel> Recipes { get; set; }
