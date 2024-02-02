@@ -3,7 +3,8 @@
 The project is a modern web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. Thanks to graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. Technologies used in the project: 
 - Backend: C#, ASP.NET Core (MVC)
   - LINQ Queries
-- ORM: Entity Framework
+  - Repository pattern
+- ORM: Entity Framework Core
 - Database: Microsoft SQL Server
 - Frontend: HTML, CSS, JavaScript
 - Additional kit: Bootstrap
