@@ -47,7 +47,7 @@
                 <td >
                 @Html.DisplayFor(modelItem => item.Time)
                 <td class="button-container">
-                        @Html.ActionLink("Details", "Details", new { id = item.RecipeID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.RecipeID }, new { @class = "btn btn-info" })
 
                         @if (item.IsFollowed)
                         {
