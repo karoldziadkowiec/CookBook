@@ -14,8 +14,11 @@ The project is a web application that enables effective management of culinary r
 
 Features of the project: adding and following a new recipe, editing, deleting, listing recipes, displaying recipes. Recipes are added to the MSSQL database. The current date is displayed in the navigation bar at the top.
 
-Start page:
-![Start - Recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/1.png)
+Home page:
+![Home page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/0.png)
+
+Recipes page:
+![Recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/1.png)
 
 Creating a new recipe:
 ![Create recipe page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/2.png)
