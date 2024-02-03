@@ -198,13 +198,71 @@ namespace CookBookTests
         }
 
         [Fact]
+        public void FollowRecipe_ShouldSetIsFollowedToTrue_WhenRecipeExists()
+        {
+            // Arrange
+            var recipeId = 1;
+
+            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+                .UseInMemoryDatabase(databaseName: "Recipes8")
+                .Options;
+
+            using (var context = new RecipeManagerContext(options))
+            {
+                var repository = new RecipeRepository(context);
+
+                var recipe = new RecipeModel { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = false };
+
+                context.Recipes.Add(recipe);
+                context.SaveChanges();
+
+                // Act
+                repository.FollowRecipe(recipeId);
+
+                // Assert
+                var result = context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
+                Assert.NotNull(result);
+                Assert.True(result.IsFollowed);
+            }
+        }
+
+        [Fact]
+        public void UnfollowRecipe_ShouldSetIsFollowedToFalse_WhenRecipeExists()
+        {
+            // Arrange
+            var recipeId = 1;
+
+            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+                .UseInMemoryDatabase(databaseName: "Recipes9")
+                .Options;
+
+            using (var context = new RecipeManagerContext(options))
+            {
+                var repository = new RecipeRepository(context);
+
+                var recipe = new RecipeModel { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = true };
+
+                context.Recipes.Add(recipe);
+                context.SaveChanges();
+
+                // Act
+                repository.UnfollowRecipe(recipeId);
+
+                // Assert
+                var result = context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
+                Assert.NotNull(result);
+                Assert.False(result.IsFollowed);
+            }
+        }
+
+        [Fact]
         public void SearchRecipes_ShouldReturnMatchingRecipes_WhenSearchTermExists()
         {
             // Arrange
             var searchTerm = "Chicken";
 
             var options = new DbContextOptionsBuilder<RecipeManagerContext>()
-                .UseInMemoryDatabase(databaseName: "Recipes8")
+                .UseInMemoryDatabase(databaseName: "Recipes10")
                 .Options;
 
             using (var context = new RecipeManagerContext(options))
