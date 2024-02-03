@@ -20,7 +20,9 @@ namespace CookBook.Repositories
 
         public IQueryable<RecipeModel> GetFavourites()
         {
-            return _context.Recipes.Where(x => x.IsFollowed == true).OrderBy(x => x.Name);
+            return _context.Recipes
+                .Where(x => x.IsFollowed == true)
+                .OrderBy(x => x.Name);
         }
 
         public void AddRecipe(RecipeModel recipe)

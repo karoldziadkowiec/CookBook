@@ -196,5 +196,39 @@ namespace CookBookTests
                 Assert.Equal(0, context.Recipes.Count());
             }
         }
+
+        [Fact]
+        public void SearchRecipes_ShouldReturnMatchingRecipes_WhenSearchTermExists()
+        {
+            // Arrange
+            var searchTerm = "Chicken";
+
+            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+                .UseInMemoryDatabase(databaseName: "Recipes8")
+                .Options;
+
+            using (var context = new RecipeManagerContext(options))
+            {
+                var repository = new RecipeRepository(context);
+
+                var recipes = new List<RecipeModel>
+                {
+                    new RecipeModel { RecipeID = 1, Name = "Chicken Curry", Time = "2h", Ingredients = "Chicken, Curry Powder", Preparation = "Cooking steps", IsFollowed = false },
+                    new RecipeModel { RecipeID = 2, Name = "Grilled Chicken", Time = "3h", Ingredients = "Chicken, Olive Oil", Preparation = "Grilling steps", IsFollowed = true },
+                    new RecipeModel { RecipeID = 3, Name = "Vegetarian Pasta", Time = "4h", Ingredients = "Pasta, Tomato Sauce", Preparation = "Boiling steps", IsFollowed = false }
+                };
+
+                context.Recipes.AddRange(recipes);
+                context.SaveChanges();
+
+                // Act
+                var result = repository.SearchRecipes(searchTerm).ToList();
+
+                // Assert
+                Assert.NotNull(result);
+                Assert.Equal(2, result.Count);
+                Assert.Contains(result, r => r.Name.Contains(searchTerm));
+            }
+        }
     }
 }

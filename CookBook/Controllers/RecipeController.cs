@@ -16,30 +16,35 @@ namespace CookBook.Controllers
         }
 
         // GET: Recipe
+        [HttpGet]
         public ActionResult Home()
         {
             return View();
         }
 
-        // GET: Recipe
+        // GET: Recipe/Index
+        [HttpGet]
         public ActionResult Index()
         {
             return View(_recipeRepository.GetAllRecipes());
         }
 
         // GET: Recipe/Favourites
+        [HttpGet]
         public ActionResult Favourites()
         {
             return View(_recipeRepository.GetFavourites());
         }
 
         // GET: Recipe/Details/5
+        [HttpGet]
         public ActionResult Details(int id)
         {
             return View(_recipeRepository.GetRecipe(id));
         }
 
         // GET: Recipe/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View(new RecipeModel());
@@ -56,6 +61,7 @@ namespace CookBook.Controllers
         }
 
         // GET: Recipe/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             return View(_recipeRepository.GetRecipe(id));
@@ -72,6 +78,7 @@ namespace CookBook.Controllers
         }
 
         // GET: Recipe/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             return View(_recipeRepository.GetRecipe(id));
@@ -119,6 +126,8 @@ namespace CookBook.Controllers
             return RedirectToAction(nameof(Favourites));
         }
 
+        // GET: Recipe/Search?searchTerm={searchTerm}
+        [HttpGet]
         public ActionResult Search(string searchTerm)
         {
             var searchResults = _recipeRepository.SearchRecipes(searchTerm);
