@@ -11,18 +11,18 @@ namespace CookBook.Repositories
         }
 
         public RecipeModel GetRecipe(int recipeId)
-            => _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
+            => _context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
 
         public IQueryable<RecipeModel> GetAllRecipes()
         {
-            return _context.Recipes.OrderBy(x => x.Name);
+            return _context.Recipes.OrderBy(r => r.Name);
         }
 
         public IQueryable<RecipeModel> GetFavourites()
         {
             return _context.Recipes
-                .Where(x => x.IsFollowed == true)
-                .OrderBy(x => x.Name);
+                .Where(r => r.IsFollowed == true)
+                .OrderBy(r => r.Name);
         }
 
         public void AddRecipe(RecipeModel recipe)
@@ -33,7 +33,7 @@ namespace CookBook.Repositories
 
         public void UpdateRecipe(int recipeId, RecipeModel recipe)
         {
-            var result = _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
+            var result = _context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
             if(result != null)
             {
                 result.Name = recipe.Name;
@@ -48,10 +48,30 @@ namespace CookBook.Repositories
 
         public void RemoveRecipe(int recipeId)
         {
-            var result = _context.Recipes.SingleOrDefault(x => x.RecipeID == recipeId);
+            var result = _context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
             if (result != null)
             {
                 _context.Recipes.Remove(result);
+                _context.SaveChanges();
+            }
+        }
+
+        public void FollowRecipe(int recipeId)
+        {
+            var result = _context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
+            if (result != null)
+            {
+                result.IsFollowed = true;
+                _context.SaveChanges();
+            }
+        }
+
+        public void UnfollowRecipe(int recipeId)
+        {
+            var result = _context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
+            if (result != null)
+            {
+                result.IsFollowed = false;
                 _context.SaveChanges();
             }
         }

@@ -99,13 +99,7 @@ namespace CookBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Follow(int id)
         {
-            var recipeModel = _recipeRepository.GetRecipe(id);
-
-            if (recipeModel != null)
-            {
-                recipeModel.IsFollowed = true;
-                _recipeRepository.UpdateRecipe(id, recipeModel);
-            }
+            _recipeRepository.FollowRecipe(id);
 
             return RedirectToAction(nameof(Favourites));
         }
@@ -115,13 +109,7 @@ namespace CookBook.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Unfollow(int id)
         {
-            var recipeModel = _recipeRepository.GetRecipe(id);
-
-            if (recipeModel != null)
-            {
-                recipeModel.IsFollowed = false;
-                _recipeRepository.UpdateRecipe(id, recipeModel);
-            }
+            _recipeRepository.UnfollowRecipe(id);
 
             return RedirectToAction(nameof(Favourites));
         }
