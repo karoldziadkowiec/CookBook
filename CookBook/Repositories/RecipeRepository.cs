@@ -1,6 +1,4 @@
 ﻿using CookBook.Models;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
 
 namespace CookBook.Repositories
 {
