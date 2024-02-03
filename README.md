@@ -1,7 +1,8 @@
 # CookBook
 
 The project is a web application that enables effective management of culinary recipes. The application aims to make it easier to store and organize recipes in a database and to allow adding new recipes. Thanks to graphical interface, the application is very easy to use, allowing users to quickly find, edit and add recipes to their collection. All repository methods were tested in the project by xUnit. Technologies used in the project: 
-- Backend: C#, ASP.NET Core (MVC)
+- Framework: ASP.NET Core (MVC)
+- Backend: C#
   - LINQ Queries
   - Repository pattern
 - ORM: Entity Framework Core
