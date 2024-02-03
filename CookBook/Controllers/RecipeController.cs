@@ -16,6 +16,12 @@ namespace CookBook.Controllers
         }
 
         // GET: Recipe
+        public ActionResult Home()
+        {
+            return View();
+        }
+
+        // GET: Recipe
         public ActionResult Index()
         {
             return View(_recipeRepository.GetAllRecipes());
@@ -111,6 +117,13 @@ namespace CookBook.Controllers
             }
 
             return RedirectToAction(nameof(Favourites));
+        }
+
+        public ActionResult Search(string searchTerm)
+        {
+            var searchResults = _recipeRepository.SearchRecipes(searchTerm);
+
+            return View("Index", searchResults);
         }
     }
 }

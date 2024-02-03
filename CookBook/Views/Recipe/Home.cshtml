@@ -1,0 +1,37 @@
+﻿@model IEnumerable<CookBook.Models.RecipeModel>
+
+@{
+    ViewData["Title"] = "recipes";
+}
+
+<style>
+    body {
+        background-image: url('/homebg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 5px;
+    }
+
+    .button-container form {
+        margin: 0;
+    }
+</style>
+<div class="text-center">
+    <h1 class="display-1">CookBook</h1>
+</div>
+<div class="text-center">
+    <h3 class="display-5">Discover delicious recipes</h3>
+</div>
+<div class="text-center my-4">
+    <h3 class="display-7">Click below and try!</h3>
+</div>
+<div class="text-center">
+    <p>
+        <a class="btn btn-success btn-danger" asp-action="Index">GO TO RECIPES</a>
+    </p>
+</div>

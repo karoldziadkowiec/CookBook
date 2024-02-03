@@ -10,5 +10,6 @@ namespace CookBook.Repositories
         void AddRecipe(RecipeModel recipe);
         void UpdateRecipe(int recipeId, RecipeModel recipe);
         void RemoveRecipe(int recipeId);
+        IQueryable<RecipeModel> SearchRecipes(string searchTerm);
     }
 }

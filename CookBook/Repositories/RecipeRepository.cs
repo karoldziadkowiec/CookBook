@@ -53,5 +53,12 @@ namespace CookBook.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public IQueryable<RecipeModel> SearchRecipes(string searchTerm)
+        {
+            return _context.Recipes
+                .Where(r => r.Name.Contains(searchTerm) || r.Ingredients.Contains(searchTerm))
+                .OrderBy(r => r.Name);
+        }
     }
 }
