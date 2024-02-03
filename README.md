@@ -38,7 +38,12 @@ Deleting recipe:
 Favourite recipes after following:
 ![Favourite recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.png)
 
+Searched recipes:
+![Searched recipes page](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.2.png)
+
 Application in mobile version: <br/>
+![MV1](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/7.3.png)
+
 ![MV2](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/8.png)
 
 ![MV3](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/9.png)
@@ -47,11 +52,11 @@ Application in mobile version: <br/>
 
 ![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/11.png)
 
-![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/12.png)
+![MV6](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/12.png)
 
-![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/13.png)
+![MV7](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/13.png)
 
-![MV5](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/14.png)
+![MV8](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/14.png)
 
 Unit testing with xUnit:
 ![Tests](https://github.com/karoldziadkowiec/CookBook/blob/master/photos/15.png)
