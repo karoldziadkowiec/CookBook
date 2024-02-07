@@ -10,7 +10,7 @@ Technologies used in the project:
 - ORM: **Entity Framework Core**
   - Migrations
 - Database: **Microsoft SQL Server**
-- Frontend: **HTML/CSS/JavaScript**
+- Frontend: **HTML, CSS and JavaScript**
 - Additional kit: **Bootstrap**
 - Unit tests: **xUnit**
 
