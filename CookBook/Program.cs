@@ -1,30 +1,39 @@
-using CookBook.Models;
-using CookBook.Repositories;
+using CookBook.DbManager;
+using CookBook.Repositories.Classes;
+using CookBook.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<RecipeManagerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("connection")));
-builder.Services.AddTransient<IRecipeRepository, RecipeRepository>();
+
+// MS SQL database connection
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(configuration.GetConnectionString("connection") ??
+        throw new InvalidOperationException("MS SQL connection string is not found!"));
+});
+
+// services
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+
+// AutoMapper service
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Recipe}/{action=Home}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
