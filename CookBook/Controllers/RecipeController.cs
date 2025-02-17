@@ -1,126 +1,115 @@
 ﻿using CookBook.Models;
-using CookBook.Repositories;
-using Microsoft.AspNetCore.Http;
+using CookBook.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CookBook.Controllers
 {
     public class RecipeController : Controller
     {
         private readonly IRecipeRepository _recipeRepository;
-
         public RecipeController(IRecipeRepository recipeRepository)
         {
             _recipeRepository = recipeRepository;
         }
 
-        // GET: Recipe
-        [HttpGet]
-        public ActionResult Home()
-        {
-            return View();
-        }
-
         // GET: Recipe/Index
         [HttpGet]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_recipeRepository.GetAllRecipes());
+            var recipes = await _recipeRepository.GetAllRecipes();
+            return View(recipes);
         }
 
         // GET: Recipe/Favourites
         [HttpGet]
-        public ActionResult Favourites()
+        public async Task<IActionResult> Favourites()
         {
-            return View(_recipeRepository.GetFavourites());
+            var favourites = await _recipeRepository.GetFavourites();
+            return View(favourites);
         }
 
-        // GET: Recipe/Details/5
+        // GET: Recipe/Details/:id
         [HttpGet]
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View(_recipeRepository.GetRecipe(id));
+            var recipe = await _recipeRepository.GetRecipe(id);
+            return View(recipe);
         }
 
         // GET: Recipe/Create
         [HttpGet]
-        public ActionResult Create()
+        public IActionResult Create()
         {
-            return View(new RecipeModel());
+            return View(new RecipeDTO());
         }
 
         // POST: Recipe/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RecipeModel recipeModel)
+        public async Task<IActionResult> Create(RecipeDTO recipe)
         {
-            _recipeRepository.AddRecipe(recipeModel);
-
+            await _recipeRepository.AddRecipe(recipe);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Recipe/Edit/5
+        // GET: Recipe/Edit/:id
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View(_recipeRepository.GetRecipe(id));
+            var recipe = await _recipeRepository.GetRecipe(id);
+            return View(recipe);
         }
 
-        // POST: Recipe/Edit/5
+        // POST: Recipe/Edit/:id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, RecipeModel recipeModel)
+        public async Task<IActionResult> Edit(int id, RecipeDTO recipe)
         {
-            _recipeRepository.UpdateRecipe(id, recipeModel);
-
+            await _recipeRepository.UpdateRecipe(id, recipe);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Recipe/Delete/5
+        // GET: Recipe/Delete/:id
         [HttpGet]
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View(_recipeRepository.GetRecipe(id));
+            var recipe = await _recipeRepository.GetRecipe(id);
+            return View(recipe);
         }
 
-        // POST: Recipe/Delete/5
+        // POST: Recipe/Delete/:id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, RecipeModel recipeModel)
+        public async Task<IActionResult> Delete(int id, RecipeDTO recipe)
         {
-            _recipeRepository.RemoveRecipe(id);
-
+            await _recipeRepository.RemoveRecipe(id);
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: Recipe/Follow/5
+        // POST: Recipe/Follow/:id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Follow(int id)
+        public async Task<IActionResult> Follow(int id)
         {
-            _recipeRepository.FollowRecipe(id);
-
+            await _recipeRepository.FollowRecipe(id);
             return RedirectToAction(nameof(Favourites));
         }
 
-        // POST: Recipe/Unfollow/5
+        // POST: Recipe/Unfollow/:id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Unfollow(int id)
+        public async Task<IActionResult> Unfollow(int id)
         {
-            _recipeRepository.UnfollowRecipe(id);
-
+            await _recipeRepository.UnfollowRecipe(id);
             return RedirectToAction(nameof(Favourites));
         }
 
         // GET: Recipe/Search?searchTerm={searchTerm}
         [HttpGet]
-        public ActionResult Search(string searchTerm)
+        public async Task<IActionResult> Search(string searchTerm)
         {
-            var searchResults = _recipeRepository.SearchRecipes(searchTerm);
-
-            return View("Index", searchResults);
+            var filteredRecipes = await _recipeRepository.SearchRecipes(searchTerm);
+            return View("Index", filteredRecipes);
         }
     }
 }
