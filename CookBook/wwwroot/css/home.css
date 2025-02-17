@@ -1,0 +1,15 @@
+body {
+    background-image: url('/homebg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.button-container {
+    display: flex;
+    gap: 5px;
+}
+
+.button-container form {
+    margin: 0;
+}

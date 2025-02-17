@@ -1,26 +1,10 @@
-﻿@model IEnumerable<CookBook.Models.RecipeModel>
+﻿@model IEnumerable<CookBook.Models.RecipeDTO>
 
 @{
     ViewData["Title"] = "favourites";
 }
 
-<style>
-    body {
-        background-image: url('/bg.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }
-
-    .button-container {
-        display: flex;
-        gap: 5px;
-    }
-
-    .button-container form {
-         margin: 0;
-    }
-</style>
+<link rel="stylesheet" href="~/css/view.css" asp-append-version="true" />
 
 <div class="text-center">
     <h1 class="display-3">Favourite recipes</h1>
@@ -54,7 +38,7 @@
                             using (Html.BeginForm("Unfollow", "Recipe", new { id = item.RecipeID }, FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                            <button type="submit" class="btn btn-outline-danger">Unfollow</button>
+                                <button type="submit" class="btn btn-outline-danger">Unfollow</button>
                             }
                         }
                 </td>

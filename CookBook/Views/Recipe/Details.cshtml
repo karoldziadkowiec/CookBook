@@ -1,4 +1,4 @@
-﻿@model CookBook.Models.RecipeModel
+﻿@model CookBook.Models.RecipeDTO
 
 @{
     ViewData["Title"] = "recipe details";
@@ -36,6 +36,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RecipeID }, new { @class="btn btn-warning"}) | 
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RecipeID }, new { @class = "btn btn-warning" }) |
     <a class="btn btn-dark" asp-action="Index">Back to recipes</a>
 </div>
