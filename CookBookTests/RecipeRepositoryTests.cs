@@ -1,35 +1,38 @@
-﻿using CookBook.Models;
-using CookBook.Repositories;
+﻿using AutoMapper;
+using CookBook.DbManager;
+using CookBook.Models;
+using CookBook.Models.Entities;
+using CookBook.Repositories.Classes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace CookBookTests
 {
     public class RecipeRepositoryTests
     {
         [Fact]
-        public void GetRecipe_ShouldReturnRecipe_WhenRecipeExists()
+        public async Task GetRecipe_ShouldReturnRecipe_WhenRecipeExists()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes1")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var sampleRecipe = new RecipeModel { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var sampleRecipe = new Recipe { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
                 context.Recipes.Add(sampleRecipe);
                 context.SaveChanges();
 
                 // Act
-                var result = repository.GetRecipe(1);
+                var result = await repository.GetRecipe(1);
 
                 // Assert
                 Assert.NotNull(result);
@@ -38,19 +41,25 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void GetRecipe_ShouldReturnNull_WhenRecipeDoesNotExist()
+        public async Task GetRecipe_ShouldReturnNull_WhenRecipeDoesNotExist()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes2")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
+
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
 
                 // Act
-                var result = repository.GetRecipe(1);
+                var result = await repository.GetRecipe(1);
 
                 // Assert
                 Assert.Null(result);
@@ -58,83 +67,103 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void GetAllRecipes_ShouldReturnAllRecipesOrderedByName()
+        public async Task GetAllRecipes_ShouldReturnAllRecipesOrderedByName()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes3")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var recipes = new List<RecipeModel>
+            using (var context = new AppDbContext(options))
             {
-                new RecipeModel { RecipeID = 1, Name = "Recipe A", Time = "2h", Ingredients = "Ingredient A", Preparation = "Step A", IsFollowed = false },
-                new RecipeModel { RecipeID = 2, Name = "Recipe B", Time = "3h", Ingredients = "Ingredient B", Preparation = "Step B", IsFollowed = true },
-                new RecipeModel { RecipeID = 3, Name = "Recipe C", Time = "4h", Ingredients = "Ingredient C", Preparation = "Step C", IsFollowed = false }
-            };
+                var repository = new RecipeRepository(context, mapper);
+
+                var recipes = new List<Recipe>
+                {
+                    new Recipe { RecipeID = 1, Name = "Recipe A", Time = "2h", Ingredients = "Ingredient A", Preparation = "Step A", IsFollowed = false },
+                    new Recipe { RecipeID = 2, Name = "Recipe B", Time = "3h", Ingredients = "Ingredient B", Preparation = "Step B", IsFollowed = true },
+                    new Recipe { RecipeID = 3, Name = "Recipe C", Time = "4h", Ingredients = "Ingredient C", Preparation = "Step C", IsFollowed = false }
+                };
                 context.Recipes.AddRange(recipes);
                 context.SaveChanges();
 
                 // Act
-                var result = repository.GetAllRecipes().ToList();
+                var result = await repository.GetAllRecipes();
+                var resultList = result.ToList();
 
                 // Assert
-                Assert.Equal(3, result.Count);
-                Assert.Equal("Recipe A", result[0].Name);
-                Assert.Equal("Recipe B", result[1].Name);
-                Assert.Equal("Recipe C", result[2].Name);
+                Assert.Equal(3, resultList.Count);
+                Assert.Equal("Recipe A", resultList[0].Name);
+                Assert.Equal("Recipe B", resultList[1].Name);
+                Assert.Equal("Recipe C", resultList[2].Name);
             }
         }
 
         [Fact]
-        public void GetFavourites_ShouldReturnFavouriteRecipesOrderedByName()
+        public async Task GetFavourites_ShouldReturnFavouriteRecipesOrderedByName()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes4")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var recipes = new List<RecipeModel>
+            using (var context = new AppDbContext(options))
             {
-                new RecipeModel { RecipeID = 1, Name = "Recipe A", Time = "2h", Ingredients = "Ingredient A", Preparation = "Step A", IsFollowed = true },
-                new RecipeModel { RecipeID = 2, Name = "Recipe B", Time = "3h", Ingredients = "Ingredient B", Preparation = "Step B", IsFollowed = false },
-                new RecipeModel { RecipeID = 3, Name = "Recipe C", Time = "4h", Ingredients = "Ingredient C", Preparation = "Step C", IsFollowed = true }
-            };
+                var repository = new RecipeRepository(context, mapper);
+
+                var recipes = new List<Recipe>
+                {
+                    new Recipe { RecipeID = 1, Name = "Recipe A", Time = "2h", Ingredients = "Ingredient A", Preparation = "Step A", IsFollowed = true },
+                    new Recipe { RecipeID = 2, Name = "Recipe B", Time = "3h", Ingredients = "Ingredient B", Preparation = "Step B", IsFollowed = false },
+                    new Recipe { RecipeID = 3, Name = "Recipe C", Time = "4h", Ingredients = "Ingredient C", Preparation = "Step C", IsFollowed = true }
+                };
                 context.Recipes.AddRange(recipes);
                 context.SaveChanges();
 
                 // Act
-                var result = repository.GetFavourites().ToList();
+                var result = await repository.GetFavourites();
+                var resultList = result.ToList();
 
                 // Assert
-                Assert.Equal(2, result.Count);
-                Assert.Equal("Recipe A", result[0].Name);
-                Assert.Equal("Recipe C", result[1].Name);
+                Assert.Equal(2, result.Count());
+                Assert.Equal("Recipe A", resultList[0].Name);
+                Assert.Equal("Recipe C", resultList[1].Name);
             }
         }
 
         [Fact]
-        public void AddRecipe_ShouldAddRecipeToDatabase()
+        public async Task AddRecipe_ShouldAddRecipeToDatabase()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes5")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
-                var newRecipe = new RecipeModel { Name = "New Recipe", Time = "2h", Ingredients = "New Ingredient", Preparation = "New Step", IsFollowed = false };
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
+
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+                var newRecipe = new RecipeDTO { Name = "New Recipe", Time = "2h", Ingredients = "New Ingredient", Preparation = "New Step", IsFollowed = false };
 
                 // Act
-                repository.AddRecipe(newRecipe);
+                await repository.AddRecipe(newRecipe);
 
                 // Assert
                 Assert.Equal(1, context.Recipes.Count());
@@ -143,25 +172,31 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void UpdateRecipe_ShouldUpdateExistingRecipe()
+        public async Task UpdateRecipe_ShouldUpdateExistingRecipe()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes6")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var sampleRecipe = new RecipeModel { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var sampleRecipe = new Recipe { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
                 context.Recipes.Add(sampleRecipe);
                 context.SaveChanges();
 
-                var updatedRecipe = new RecipeModel { Name = "Updated Recipe", Time = "3h", Ingredients = "Updated Ingredient", Preparation = "Updated Step", IsFollowed = true };
+                var updatedRecipe = new RecipeDTO { Name = "Updated Recipe", Time = "3h", Ingredients = "Updated Ingredient", Preparation = "Updated Step", IsFollowed = true };
 
                 // Act
-                repository.UpdateRecipe(1, updatedRecipe);
+                await repository.UpdateRecipe(1, updatedRecipe);
 
                 // Assert
                 var result = context.Recipes.First();
@@ -174,23 +209,29 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void RemoveRecipe_ShouldRemoveRecipeFromDatabase()
+        public async Task RemoveRecipe_ShouldRemoveRecipeFromDatabase()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes7")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var sampleRecipe = new RecipeModel { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var sampleRecipe = new Recipe { RecipeID = 1, Name = "Sample Recipe", Time = "2h", Ingredients = "Ingredient1", Preparation = "Step1", IsFollowed = false };
                 context.Recipes.Add(sampleRecipe);
                 context.SaveChanges();
 
                 // Act
-                repository.RemoveRecipe(1);
+                await repository.RemoveRecipe(1);
 
                 // Assert
                 Assert.Equal(0, context.Recipes.Count());
@@ -198,26 +239,32 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void FollowRecipe_ShouldSetIsFollowedToTrue_WhenRecipeExists()
+        public async Task FollowRecipe_ShouldSetIsFollowedToTrue_WhenRecipeExists()
         {
             // Arrange
             var recipeId = 1;
 
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes8")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var recipe = new RecipeModel { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = false };
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var recipe = new Recipe { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = false };
 
                 context.Recipes.Add(recipe);
                 context.SaveChanges();
 
                 // Act
-                repository.FollowRecipe(recipeId);
+                await repository.FollowRecipe(recipeId);
 
                 // Assert
                 var result = context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
@@ -227,26 +274,32 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void UnfollowRecipe_ShouldSetIsFollowedToFalse_WhenRecipeExists()
+        public async Task UnfollowRecipe_ShouldSetIsFollowedToFalse_WhenRecipeExists()
         {
             // Arrange
             var recipeId = 1;
 
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes9")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var recipe = new RecipeModel { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = true };
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var recipe = new Recipe { RecipeID = recipeId, Name = "Test Recipe", Time = "2h", Ingredients = "Test Ingredients", Preparation = "Test Preparation", IsFollowed = true };
 
                 context.Recipes.Add(recipe);
                 context.SaveChanges();
 
                 // Act
-                repository.UnfollowRecipe(recipeId);
+                await repository.UnfollowRecipe(recipeId);
 
                 // Assert
                 var result = context.Recipes.SingleOrDefault(r => r.RecipeID == recipeId);
@@ -256,35 +309,41 @@ namespace CookBookTests
         }
 
         [Fact]
-        public void SearchRecipes_ShouldReturnMatchingRecipes_WhenSearchTermExists()
+        public async Task SearchRecipes_ShouldReturnMatchingRecipes_WhenSearchTermExists()
         {
             // Arrange
             var searchTerm = "Chicken";
 
-            var options = new DbContextOptionsBuilder<RecipeManagerContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "Recipes10")
                 .Options;
 
-            using (var context = new RecipeManagerContext(options))
+            var config = new MapperConfiguration(cfg =>
             {
-                var repository = new RecipeRepository(context);
+                cfg.AddProfile<MappingProfile>();
+            });
+            var mapper = config.CreateMapper();
 
-                var recipes = new List<RecipeModel>
+            using (var context = new AppDbContext(options))
+            {
+                var repository = new RecipeRepository(context, mapper);
+
+                var recipes = new List<Recipe>
                 {
-                    new RecipeModel { RecipeID = 1, Name = "Chicken Curry", Time = "2h", Ingredients = "Chicken, Curry Powder", Preparation = "Cooking steps", IsFollowed = false },
-                    new RecipeModel { RecipeID = 2, Name = "Grilled Chicken", Time = "3h", Ingredients = "Chicken, Olive Oil", Preparation = "Grilling steps", IsFollowed = true },
-                    new RecipeModel { RecipeID = 3, Name = "Vegetarian Pasta", Time = "4h", Ingredients = "Pasta, Tomato Sauce", Preparation = "Boiling steps", IsFollowed = false }
+                    new Recipe { RecipeID = 1, Name = "Chicken Curry", Time = "2h", Ingredients = "Chicken, Curry Powder", Preparation = "Cooking steps", IsFollowed = false },
+                    new Recipe { RecipeID = 2, Name = "Grilled Chicken", Time = "3h", Ingredients = "Chicken, Olive Oil", Preparation = "Grilling steps", IsFollowed = true },
+                    new Recipe { RecipeID = 3, Name = "Vegetarian Pasta", Time = "4h", Ingredients = "Pasta, Tomato Sauce", Preparation = "Boiling steps", IsFollowed = false }
                 };
 
                 context.Recipes.AddRange(recipes);
                 context.SaveChanges();
 
                 // Act
-                var result = repository.SearchRecipes(searchTerm).ToList();
+                var result = await repository.SearchRecipes(searchTerm);
 
                 // Assert
                 Assert.NotNull(result);
-                Assert.Equal(2, result.Count);
+                Assert.Equal(2, result.Count());
                 Assert.Contains(result, r => r.Name.Contains(searchTerm));
             }
         }
